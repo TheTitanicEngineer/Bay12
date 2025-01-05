@@ -68,3 +68,10 @@
 		dangers += living
 
 	return length(dangers) > 1
+
+
+/datum/ai_holder/legion/harvester/react_to_attack(atom/movable/attacker)
+	. = ..()
+	if (rand(0, 100) >= 100) // 5% chance when hit to be interrupted
+		return
+	holder.do_user_interrupted = world.time

@@ -11,6 +11,7 @@
 
 	mob_size = MOB_LARGE
 	ai_holder = /datum/ai_holder/legion/harvester
+	mob_flags = MOB_FLAG_UNPINNABLE | MOB_FLAG_DO_USER_INTERRUPT
 
 	special_attack_min_range = 0
 	special_attack_max_range = 1
