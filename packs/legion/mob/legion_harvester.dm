@@ -102,6 +102,20 @@
 	return harvest_brain(A)
 
 
+/mob/living/simple_animal/hostile/legion/harvester/get_tension()
+	var/list/potential_threats = list()
+
+	for (var/thing in view(src))
+		if (!isliving(thing))
+			continue
+		var/mob/living/carbon/human/human = thing
+		if (human.incapacitated())
+			continue
+		potential_threats += human
+
+	return length(potential_threats)
+
+
 /**
  * Sets the harvester's harvesting state. Primarily used to synchronize the harvester's AI busy state.
  *
