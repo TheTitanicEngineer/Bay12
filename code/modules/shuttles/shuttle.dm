@@ -259,12 +259,12 @@
 			propagate_network(C,C.powernet)
 
 	// Move any active radio beacon signals to follow the correct overmap object.
-	for(var/obj/machinery/radio_beacon/B in beacons)
-		if(map_sectors["[get_z(B)]"])
-			if(B.signal)
-				B.signal.set_origin(map_sectors["[get_z(B)]"])
-			if(B.emergency_signal)
-				B.emergency_signal.set_origin(map_sectors["[get_z(B)]"])
+	for (var/obj/machinery/radio_beacon/beacon as anything in beacons)
+		var/obj/overmap/visitable/visitable = map_sectors["[get_z(beacon)]"]
+		if (!visitable)
+			continue
+		beacon.signal?.set_origin(visitable)
+		beacon.emergency_signal?.set_origin(visitable)
 
 	if(mothershuttle)
 		var/datum/shuttle/mothership = SSshuttle.shuttles[mothershuttle]
