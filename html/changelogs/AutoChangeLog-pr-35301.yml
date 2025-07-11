@@ -1,0 +1,5 @@
+author: Zenithstar
+changes:
+  - {bugfix: Clipboard icons now update to their empty state when all paper is 
+      removed from them.}
+delete-after: true
