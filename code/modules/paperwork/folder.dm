@@ -421,6 +421,23 @@
 		attack_self(usr)
 		update_icon()
 		return
+	if (href_list["remove"])
+		var/obj/item/removed_item = locate(href_list["remove"]) in contents
+		if (!removed_item)
+			to_chat(usr, SPAN_WARNING("That's no longer held by \the [src]."))
+			return
+		usr.put_in_hands(removed_item)
+		attack_hand(usr)
+		if (removed_item == top_paper)
+			top_paper = null
+			var/i = length(contents)
+			while (i > 0 && !top_paper)
+				var/obj/item/item = contents[i]
+				if (istype(item, /obj/item/paper))
+					top_paper = item
+				i--
+		update_icon()
+		return
 	..()
 
 
