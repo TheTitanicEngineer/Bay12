@@ -22,6 +22,8 @@
 	var/locked = 0
 	var/scan_id = 1
 	var/is_secure = 0
+	/// `type path = ammount`. Defaults to 1 if ammount = `null`
+	var/startswith = list()
 	/// List of type paths this fridge accepts.
 	var/list/accepted_types = list(
 		/obj/item/reagent_containers/food/snacks/grown,
@@ -40,6 +42,36 @@
 		wires = new/datum/wires/smartfridge(src)
 	update_icon()
 
+/obj/machinery/smartfridge/Initialize()
+	. = ..()
+	fill_with(startswith)
+
+/**
+* Fills the smartfridge with objects from a list.
+* Verifies that each object is an accepted type for the smartfridge.
+*
+* @param lst an associative list where `key = value` corresponds to `obj = ammount`.
+* If `key(obj) = null` then stocks only 1 instance of said object.
+*
+* @return `bool` where *FALSE* means an invalid list
+*/
+/obj/machinery/smartfridge/proc/fill_with(list/lst)
+	if(!length(lst))
+		return FALSE
+	for(var/item_path in lst)
+		if(!accept_check(item_path))
+			log_debug("[src] could not stock [item_path]. The item is not an accepted type!")
+			continue
+		var/data = lst[item_path]
+		for(var/i in 1 to data || 1)
+			var/item = new item_path(src)
+			if(item && stock_item(item))
+				continue
+			log_debug("Failed to stock [item_path] at [src]!")
+			qdel(item)
+	update_icon()
+	return TRUE
+
 /obj/machinery/smartfridge/Destroy()
 	for(var/datum/stored_items/S in item_records)
 		qdel(S)
@@ -51,8 +83,10 @@
 		return list()
 	return ..()
 
-/obj/machinery/smartfridge/proc/accept_check(obj/item/O)
-	if (is_type_in_list(O, accepted_types))
+/obj/machinery/smartfridge/proc/accept_check(item)
+	if(isobj(item) && is_type_in_list(item, accepted_types))
+		return TRUE
+	if(ispath(item) && is_path_in_list(item, accepted_types))
 		return TRUE
 	return FALSE
 
@@ -78,7 +112,8 @@
 	icon_contents = "chem"
 	req_access = list(list(access_medical,access_chemistry))
 	accepted_types = list(
-		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/storage/pill_bottle,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/ivbag
