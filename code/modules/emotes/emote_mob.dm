@@ -24,18 +24,6 @@
 		if(act == "me")
 			return custom_emote(m_type, message)
 
-		if(act == "custom")
-			if(!message)
-				message = sanitize(input("Enter an emote to display.") as text|null)
-			if(!message)
-				return
-			if (!m_type)
-				if(alert(src, "Is this an audible emote?", "Emote", "Yes", "No") == "No")
-					m_type = VISIBLE_MESSAGE
-				else
-					m_type = AUDIBLE_MESSAGE
-			return custom_emote(m_type, message)
-
 	var/splitpoint = findtext(act, " ")
 	if(splitpoint > 0)
 		var/tempstr = act
