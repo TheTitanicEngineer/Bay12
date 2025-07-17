@@ -110,13 +110,7 @@
 		to_chat(src, "You are unable to emote.")
 		return
 
-	var/input
-	if(!message)
-		input = sanitize(input(src,"Choose an emote to display.") as text|null)
-	else
-		input = message
-
-	if(input)
+	if(message)
 		message = format_emote(src, message)
 	else
 		return
