@@ -1,0 +1,7 @@
+author: SierraKomodo
+changes:
+  - {rscdel: 'Entering no text into the `me` prompt no longer opens a second prompt
+      to type in a emote command; Just use the existing `say "{prefix}command"` system
+      instead, if you ever used that box. (Somehow I doubt anyone even know that was
+      a feature).'}
+delete-after: true
