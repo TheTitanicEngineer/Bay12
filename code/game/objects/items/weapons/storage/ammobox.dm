@@ -17,11 +17,6 @@
 	var/ammo_max = 100
 
 
-/obj/item/ammobox/pistol
-	ammo_type = /obj/item/ammo_casing/pistol
-	ammo_count = 100
-
-
 /obj/item/ammobox/Initialize(mapload)
 	. = ..()
 	if (. == INITIALIZE_HINT_QDEL || QDELETED(src))
