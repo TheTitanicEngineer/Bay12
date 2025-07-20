@@ -19,10 +19,10 @@
 	ammo_type = /obj/item/ammo_casing/pistol/small
 
 /obj/item/ammobox/pistol/small_practice
-	ammo_type = /obj/item/ammo_casing/pistol/practice/small
+	ammo_type = /obj/item/ammo_casing/pistol/small/practice
 
 /obj/item/ammobox/pistol/small_rubber
-	ammo_type = /obj/item/ammo_casing/pistol/rubber/small
+	ammo_type = /obj/item/ammo_casing/pistol/small/rubber
 
 /obj/item/ammobox/pistol/small_emp
 	ammo_type = /obj/item/ammo_casing/pistol/small/emp
