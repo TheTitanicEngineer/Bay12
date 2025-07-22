@@ -69,6 +69,7 @@ jobs:
     - preflight
     if: needs.preflight.outputs.dm == 'true'
     steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - name: Check Cache
         uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684
         id: check
