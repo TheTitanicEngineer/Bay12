@@ -2,7 +2,7 @@ name: Run Tests
 
 env:
   BYOND_MAJOR: "516"
-  BYOND_MINOR: "1664"
+  BYOND_MINOR: "1666"
   BYOND_SOURCE: "https://indm.dev/byond" # Canonical: https://www.byond.com/download/build
   SPACEMAN_DMM_VERSION: suite-1.10
 
