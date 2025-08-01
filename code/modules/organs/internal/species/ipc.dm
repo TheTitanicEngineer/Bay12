@@ -34,8 +34,11 @@
 
 /obj/item/organ/internal/posibrain/Initialize()
 	. = ..()
-	if(!brainmob && iscarbon(loc))
-		init(loc)
+	if(!brainmob)
+		if(iscarbon(loc))
+			init(loc)
+		else
+			brainmob = new()
 	robotize()
 	unshackle()
 	update_icon()
