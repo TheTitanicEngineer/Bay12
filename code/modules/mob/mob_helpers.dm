@@ -307,8 +307,7 @@ var/global/list/organ_rel_size = list(
 		if(istype(oldeye, /mob/observer/eye/aiEye))
 			aiEyeFlag = 1
 
-		var/x
-		for(x=0; x<duration, x++)
+		for(var/i = 1 to duration)
 			if(aiEyeFlag)
 				var/eye_x = clamp(oldeye.loc.x+rand(-strength,strength), 1, world.maxx)
 				var/eye_y = clamp(oldeye.loc.y+rand(-strength,strength), 1, world.maxy)
