@@ -42,6 +42,7 @@
 		data["msg_body"] = digitalPencode2html(current_message.stored_data)
 		data["msg_timestamp"] = current_message.timestamp
 		data["msg_source"] = current_message.source
+		data["msg_recipient"] = current_message.recipient
 	else if(istype(current_account))
 		data["current_account"] = current_account.login
 		data["cur_suspended"] = current_account.suspended
@@ -50,6 +51,7 @@
 			all_messages.Add(list(list(
 				"title" = message.title,
 				"source" = message.source,
+				"recipient" = message.recipient,
 				"timestamp" = message.timestamp,
 				"uid" = message.uid
 			)))
