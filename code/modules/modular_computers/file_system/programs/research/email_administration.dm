@@ -47,7 +47,7 @@
 		data["current_account"] = current_account.login
 		data["cur_suspended"] = current_account.suspended
 		var/list/all_messages = list()
-		for(var/datum/computer_file/data/email_message/message in (current_account.inbox | current_account.spam | current_account.deleted))
+		for(var/datum/computer_file/data/email_message/message in (current_account.inbox | current_account.outbox | current_account.spam | current_account.deleted))
 			all_messages.Add(list(list(
 				"title" = message.title,
 				"source" = message.source,
