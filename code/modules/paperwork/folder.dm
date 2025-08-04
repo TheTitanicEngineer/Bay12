@@ -349,6 +349,10 @@
 	onclose(user, window_name)
 	add_fingerprint(usr)
 
+/obj/item/material/folder/clipboard/examine(mob/user, distance, is_adjacent)
+	. = ..()
+	if (top_paper && is_adjacent)
+		top_paper.show_content(user)
 
 /obj/item/material/folder/clipboard/Topic(href_text, list/href_list, datum/topic_state/state)
 	if (!CanPhysicallyInteractWith(usr, src))
