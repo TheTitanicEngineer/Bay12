@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: Positronic brains can now be activated.}
+delete-after: true
