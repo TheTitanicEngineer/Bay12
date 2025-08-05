@@ -4032,9 +4032,6 @@
 /turf/simulated/floor/plating,
 /area/medical/counselor/therapy)
 "ahf" = (
-/obj/structure/bookcase,
-/obj/item/book/manual/medical_diagnostics_manual,
-/obj/item/book/manual/military_law,
 /obj/floor_decal/corner/paleblue/mono,
 /obj/machinery/light_switch{
 	pixel_x = 6;
@@ -4045,6 +4042,10 @@
 	pixel_x = -2;
 	pixel_y = 24
 	},
+/obj/machinery/photocopier/faxmachine{
+	department = "Torch - Counselor"
+	},
+/obj/structure/table/standard,
 /turf/simulated/floor/tiled/white/monotile,
 /area/medical/counselor)
 "ahg" = (
@@ -4153,6 +4154,19 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/filingcabinet/chestdrawer{
+	dir = 1
+	},
+/obj/item/material/folder/blue,
+/obj/item/material/folder/red,
+/obj/item/material/folder,
+/obj/item/material/folder/nt,
+/obj/item/material/folder/yellow,
+/obj/item/material/folder/white,
+/obj/item/material/folder/white,
+/obj/item/material/folder/white,
+/obj/item/material/folder/envelope,
+/obj/item/material/folder/envelope,
 /turf/simulated/floor/tiled/white,
 /area/medical/counselor)
 "ahr" = (
@@ -4464,17 +4478,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/firstdeck/centralstarboard)
 "ahU" = (
-/obj/structure/filingcabinet/chestdrawer{
-	dir = 1
-	},
-/obj/item/material/folder/blue,
-/obj/item/material/folder/red,
-/obj/item/material/folder,
-/obj/item/material/folder/nt,
-/obj/item/material/folder/yellow,
-/obj/item/material/folder/white,
-/obj/item/material/folder/white,
-/obj/item/material/folder/white,
 /obj/floor_decal/corner/paleblue/mono,
 /obj/machinery/button/alternate/door{
 	id_tag = "counselor";
@@ -4488,8 +4491,9 @@
 	pixel_x = -24;
 	pixel_y = -5
 	},
-/obj/item/material/folder/envelope,
-/obj/item/material/folder/envelope,
+/obj/structure/bookcase,
+/obj/item/book/manual/medical_diagnostics_manual,
+/obj/item/book/manual/military_law,
 /turf/simulated/floor/tiled/white/monotile,
 /area/medical/counselor)
 "ahV" = (
@@ -16355,17 +16359,15 @@
 /area/medical/sleeper)
 "dZx" = (
 /obj/structure/table/steel,
-/obj/item/stack/package_wrap/cargo_wrap,
-/obj/item/hand_labeler,
-/obj/item/device/destTagger{
-	pixel_y = 13
-	},
 /obj/floor_decal/corner/red/mono,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/recharger/wallcharger{
 	dir = 4;
 	pixel_x = -23;
 	pixel_y = -3
+	},
+/obj/machinery/photocopier/faxmachine{
+	department = "Torch - Security"
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/security/locker)
@@ -16500,6 +16502,7 @@
 	pixel_y = -3
 	},
 /obj/item/sticky_pad/random,
+/obj/item/hand_labeler,
 /turf/simulated/floor/tiled/monotile,
 /area/security/locker)
 "eim" = (
@@ -20582,6 +20585,10 @@
 	},
 /obj/item/book/manual/sol_sop,
 /obj/random_multi/single_item/memo_security,
+/obj/item/device/destTagger{
+	pixel_y = 13
+	},
+/obj/item/stack/package_wrap/cargo_wrap,
 /turf/simulated/floor/tiled/monotile,
 /area/security/locker)
 "kku" = (

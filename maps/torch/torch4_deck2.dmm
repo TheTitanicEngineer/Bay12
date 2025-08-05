@@ -2808,6 +2808,9 @@
 "fF" = (
 /obj/structure/table/steel,
 /obj/machinery/light,
+/obj/machinery/photocopier/faxmachine{
+	department = "Torch - Robotics"
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/assembly/robotics)
 "fG" = (
@@ -10752,13 +10755,15 @@
 	dir = 4
 	},
 /obj/structure/table/steel,
-/obj/item/stack/material/wood/fifty,
 /obj/floor_decal/industrial/warning{
 	dir = 4;
 	icon_state = "warning"
 	},
 /obj/machinery/camera/network/engineering{
 	c_tag = "Engineering - Lobby"
+	},
+/obj/machinery/photocopier/faxmachine{
+	department = "Torch - Engineering"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/engineering_bay)
@@ -16558,6 +16563,7 @@
 /obj/floor_decal/industrial/warning{
 	dir = 6
 	},
+/obj/item/stack/material/wood/fifty,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/engineering_bay)
 "SD" = (
