@@ -1,6 +1,0 @@
-author: Cakey
-changes:
-  - {rscadd: 'You can now pre-select your uniform for your jobs via the occupation
-      tab. The options available will match the clothing available to your branch
-      and rank just like in uniform vendors, minus dress and PT.'}
-delete-after: true

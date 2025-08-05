@@ -1,5 +1,0 @@
-author: Sbotkin
-changes:
-  - {rscadd: Examining a clipboard will show you its topmost paper.}
-  - {tweak: Examining a paper as a ghost will always show you its content.}
-delete-after: true
