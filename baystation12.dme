@@ -1640,6 +1640,8 @@
 #include "code\modules\client\preference_setup\loadout\lists\xenowear.dm"
 #include "code\modules\client\preference_setup\occupation\occupation.dm"
 #include "code\modules\client\preference_setup\occupation\skill_selection.dm"
+#include "code\modules\client\preference_setup\occupation\uniform_selection.dm"
+#include "code\modules\client\preference_setup\uniform\uniform.dm"
 #include "code\modules\clothing\_clothing.dm"
 #include "code\modules\clothing\_clothing_flags.dm"
 #include "code\modules\clothing\buttons.dm"
