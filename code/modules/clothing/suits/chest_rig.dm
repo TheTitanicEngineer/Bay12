@@ -3,6 +3,10 @@
 	body_parts_covered = UPPER_TORSO
 	icon_state = "chest-rig"
 	blood_overlay_type = "armorblood"
+	valid_accessory_slots = list(
+		ACCESSORY_SLOT_ARMOR_MISC,
+		ACCESSORY_SLOT_INSIGNIA
+	)
 
 
 /obj/item/clothing/suit/storage/chest_rig/security
