@@ -93,12 +93,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/spy_station/dock)
-"cf" = (
-/obj/structure/grille,
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/space,
-/area/space)
 "ct" = (
 /obj/machinery/optable,
 /obj/random/trash,
@@ -2604,12 +2598,6 @@
 /obj/structure/lattice,
 /turf/space,
 /area/spy_station/engin)
-"IO" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille/broken,
-/turf/space,
-/area/space)
 "IR" = (
 /obj/machinery/light,
 /obj/floor_decal/borderfloorblack,
@@ -7303,7 +7291,7 @@ dC
 dC
 dC
 QZ
-cf
+QZ
 rU
 dC
 dC
@@ -7812,7 +7800,7 @@ dC
 dC
 dC
 dC
-cf
+QZ
 rU
 rU
 Ji
@@ -10074,7 +10062,7 @@ dC
 zu
 rU
 rU
-IO
+CZ
 dC
 zD
 dC
@@ -10775,7 +10763,7 @@ rU
 dC
 dC
 fV
-Bd
+rU
 QZ
 QZ
 CZ
@@ -10876,8 +10864,8 @@ cY
 CZ
 QZ
 rU
-Bd
-Bd
+rU
+rU
 QZ
 dC
 Gj
