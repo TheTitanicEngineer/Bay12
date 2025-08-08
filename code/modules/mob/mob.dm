@@ -628,7 +628,9 @@
 /mob/proc/is_active()
 	return (0 >= usr.stat)
 
-/mob/proc/is_dead()
+/mob/proc/is_dead(ignore_fake = FALSE)
+	if (!ignore_fake && GET_FLAGS(status_flags, FAKEDEATH))
+		return TRUE
 	return stat == DEAD
 
 /mob/proc/is_mechanical()
