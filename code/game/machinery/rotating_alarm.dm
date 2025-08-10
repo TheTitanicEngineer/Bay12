@@ -111,18 +111,14 @@
 		add_vis_contents(spin_effect)
 
 
-/obj/machinery/rotating_alarm/proc/set_alarm_sound(new_sound)
-	if (new_sound == sound_file)
+/obj/machinery/rotating_alarm/proc/set_on()
+	if (on)
 		return
-	QDEL_NULL(sound_loop)
-	sound_file = new_sound
-	if (!sound_file || !on)
-		return
-	start_alarm_sound()
-
-
-/obj/machinery/rotating_alarm/proc/start_alarm_sound()
-	if (sound_loop)
+	add_vis_contents(spin_effect)
+	set_light(2, 0.5, alarm_light_color)
+	on = TRUE
+	low_alarm = FALSE
+	if (!sound_file)
 		return
 	sound_loop = GLOB.sound_player.PlayLoopingSound(
 		src,
@@ -133,16 +129,6 @@
 	)
 
 
-/obj/machinery/rotating_alarm/proc/set_on()
-	if (on)
-		return
-	add_vis_contents(spin_effect)
-	set_light(2, 0.5, alarm_light_color)
-	on = TRUE
-	low_alarm = FALSE
-	start_alarm_sound()
-
-
 /obj/machinery/rotating_alarm/proc/set_off()
 	if (!on)
 		return
@@ -150,4 +136,6 @@
 	set_light(0)
 	on = FALSE
 	low_alarm = FALSE
+	if (!sound_loop)
+		return
 	QDEL_NULL(sound_loop)
