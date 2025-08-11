@@ -60,15 +60,19 @@
 		return FALSE
 	for(var/item_path in lst)
 		if(!accept_check(item_path))
-			log_debug("[src] could not stock [item_path]. The item is not an accepted type!")
+			log_debug("[src] could not stock [item_path]. The item is not an accepted type! ([src.x] ,[src.y], [src.z])")
 			continue
 		var/data = lst[item_path]
+		var/logged = FALSE
 		for(var/i in 1 to data || 1)
 			var/item = new item_path(src)
 			if(item && stock_item(item))
 				continue
-			log_debug("Failed to stock [item_path] at [src]!")
 			qdel(item)
+			if(logged)
+				continue
+			log_debug("Failed to stock x[data ? data : 1] [item_path] at [src] ([src.x] ,[src.y], [src.z])!")
+			logged = TRUE
 	update_icon()
 	return TRUE
 
@@ -342,17 +346,21 @@
 
 /obj/machinery/smartfridge/proc/stock_item(obj/item/O)
 	for(var/datum/stored_items/I in item_records)
-		if(istype(O, I.item_path) && O.name == I.item_name)
-			stock(I, O)
-			return
+		if(!istype(O, I.item_path) || O.name != I.item_name)
+			continue
+		if(stock(I, O))
+			return TRUE
 
 	var/datum/stored_items/I = new/datum/stored_items(src, O.type, O.name)
 	dd_insertObjectList(item_records, I)
-	stock(I, O)
+	if(stock(I, O))
+		return TRUE
 
 /obj/machinery/smartfridge/proc/stock(datum/stored_items/I, obj/item/O)
-	I.add_product(O)
+	if(!I.add_product(O))
+		return FALSE
 	SSnano.update_uis(src)
+	return TRUE
 
 /obj/machinery/smartfridge/interface_interact(mob/user)
 	ui_interact(user)
