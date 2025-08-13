@@ -1,0 +1,4 @@
+author: SierraKomodo
+changes:
+  - {rscdel: Security alarms no longer make alarm sounds.}
+delete-after: true
