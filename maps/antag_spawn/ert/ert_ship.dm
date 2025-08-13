@@ -19,15 +19,6 @@
 	else
 		crash_with("[GLOB.ert_announcer.type] was unable to be relocated to the ERT shuttle.")
 
-	spawn(1 MINUTE)
-		silence_alarms()
-
-/datum/map_template/ruin/antag_spawn/ert/proc/silence_alarms()
-	for(var/obj/machinery/rotating_alarm/start_on/ert/alarm in SSmachines.machinery)
-		if(!alarm.sound_loop)
-			continue
-		QDEL_NULL(alarm.sound_loop)
-
 /obj/overmap/visitable/sector/ert_ship
 	name = "SFV Trident"
 	desc = "An Orca-Class Escort Carrier, broadcasting SCGF codes.\n<span class='bad'>Its weapons systems appears to be active.</span>"
@@ -132,7 +123,6 @@
 	desc = "A rotating alarm light."
 	icon_state = "code red"
 	alarm_light_color = COLOR_RED
-	sound_file = 'sound/obj/machinery/rotating_alarm/alert_red.ogg'
 
 // Turfs & Paints
 
