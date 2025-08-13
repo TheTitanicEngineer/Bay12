@@ -5,10 +5,9 @@
 	alarm_light_color = COLOR_GREEN
 
 
-/obj/machinery/rotating_alarm/security_alarm/proc/set_alert(icon_state, alert_level, alert_color, alarm_sound)
+/obj/machinery/rotating_alarm/security_alarm/proc/set_alert(icon_state, alert_level, alert_color)
 	set_color(alert_color)
 	set_icon_state(icon_state)
-	set_alarm_sound(alarm_sound)
 	switch (alert_level)
 		if ("off")
 			set_off()
