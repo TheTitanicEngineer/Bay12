@@ -442,7 +442,9 @@
 		error = null
 		new_message = TRUE
 		msg_recipient = M.source
-		msg_title = "Re: [M.title]"
+		msg_title = M.title
+		if (copytext_char(msg_title, 1, 4) != "Re:")
+			msg_title = "Re: [msg_title]"
 		var/atom/movable/AM = host
 		if(istype(AM))
 			if(ismob(AM.loc))
