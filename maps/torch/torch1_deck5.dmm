@@ -8,7 +8,9 @@
 /area/space)
 "ac" = (
 /obj/structure/table/steel,
-/obj/item/pen/fancy,
+/obj/machinery/photocopier/faxmachine{
+	department = "Torch - Pilots Lounge"
+	},
 /turf/simulated/floor/lino,
 /area/command/pilot)
 "ad" = (
@@ -3683,6 +3685,7 @@
 	},
 /obj/item/material/folder/blue,
 /obj/item/material/folder/envelope,
+/obj/item/pen/fancy,
 /turf/simulated/floor/lino,
 /area/command/pilot)
 "iL" = (
