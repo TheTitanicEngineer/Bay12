@@ -998,7 +998,7 @@
 			holder.icon_state = "hudhealthy"
 
 		var/image/holder2 = hud_list[STATUS_HUD_OOC]
-		if(is_dead(TRUE))
+		if(is_real_dead())
 			holder2.icon_state = "huddead"
 		else if(has_brain_worms())
 			holder2.icon_state = "hudbrainworm"

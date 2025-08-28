@@ -720,7 +720,7 @@
 	var/obj/item/device/soulstone/source
 	var/datum/pronouns/pronouns = user.choose_from_pronouns()
 	for(var/mob/living/carbon/human/M in get_turf(src))
-		if(M.is_dead(TRUE))
+		if(M.is_real_dead())
 			if(iscultist(M))
 				if(M.key)
 					target = M

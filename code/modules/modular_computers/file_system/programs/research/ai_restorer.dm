@@ -72,7 +72,7 @@
 	A.adjustOxyLoss(-4)
 	A.updatehealth()
 	// If the AI is dead, revive it.
-	if (A.health >= -100 && A.is_dead(TRUE))
+	if (A.health >= -100 && A.is_real_dead())
 		A.set_stat(CONSCIOUS)
 		A.lying = 0
 		A.switch_from_dead_to_living_mob_list()

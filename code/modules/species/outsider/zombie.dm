@@ -554,7 +554,7 @@ GLOBAL_LIST_AS(zombie_species, list(
 		target.reagents.add_reagent(/datum/reagent/zombie, 35) //Just in case they haven't been infected already
 		if (target.getBruteLoss() > target.maxHealth * 1.5)
 			to_chat(src,SPAN_WARNING("You've scraped \the [target] down to the bones already!."))
-			if (!target.is_dead(TRUE))
+			if (!target.is_real_dead())
 				target.zombify()
 			else if (!(MUTATION_SKELETON in target.mutations))
 				if (istype(target, /mob/living/carbon/human/monkey))
