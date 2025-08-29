@@ -1,5 +1,0 @@
-author: Banditoz
-changes:
-  - {tweak: Code red no longer allows automatic transfer votes. It will try 
-      again later as if the result was extended.}
-delete-after: true

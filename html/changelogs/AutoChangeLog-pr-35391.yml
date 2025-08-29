@@ -1,5 +1,0 @@
-author: Spookerton
-changes:
-  - {tweak: 'Added Vote Assertiveness preference. Cycle it to see what it does, or
-      see <a href="https://github.com/Baystation12/Baystation12/pull/35391">PR 35391</a>!'}
-delete-after: true
