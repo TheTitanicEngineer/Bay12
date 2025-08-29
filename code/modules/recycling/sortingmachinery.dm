@@ -358,6 +358,20 @@
 /obj/item/smallDelivery/attack_self(mob/user as mob)
 	to_chat(user, "You need a sharp tool to unwrap \the [src].")
 
+/// Allows GAS in hunting mode (and others with can_shred) to open the packaging wrap with their bare arms.
+/obj/item/smallDelivery/attack_self(mob/user)
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		var/datum/pronouns/P = choose_from_pronouns()
+		if(H.species.can_shred(H,1))
+			user.visible_message(
+				SPAN_WARNING("\The [user] shreds \the [src] open with \a [P.his] scythe-like arms!"),
+				SPAN_NOTICE("You shred \the [src] open with your scythe-like arms!")
+			)
+			playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+			unwrap(user)
+			return TRUE
+
 /obj/item/smallDelivery/use_tool(obj/item/tool, mob/living/user, list/click_params)
 	if (is_sharp(tool))
 		user.visible_message(
