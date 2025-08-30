@@ -41,22 +41,27 @@
 	return TRUE
 
 /// Allows GAS in hunting mode (and others with can_shred) to open the shellfish with their bare arms.
-/obj/item/shellfish/attack_self(mob/user)
+/obj/item/shellfish/attack_self(mob/living/user)
 	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		if(!H.species.can_shred(H,1))
+		var/mob/living/carbon/human/shredder = user
+		if(!shredder.species.can_shred(shredder,1))
 			return ..()
-		to_chat(user, SPAN_NOTICE("You start to pry open \the [src]."))
-		if(!user.do_skilled(3 SECONDS, SKILL_COOKING, user))
+		user.visible_message(
+			SPAN_NOTICE("\The [user] starts to pry-open \the [src]."),
+			SPAN_NOTICE("You start to pry open \the [src].")
+		)
+		if(!user.do_skilled(3 SECONDS, SKILL_COOKING, user) || !user.use_sanity_check(src))
 			return TRUE
-		if (!prob(user.skill_fail_chance(SKILL_COOKING, 80, SKILL_TRAINED)))
-			to_chat(user, SPAN_NOTICE("You carefully clean and open \the [src]."))
-			new snack_path (get_turf(src))
+		if(!prob(user.skill_fail_chance(SKILL_COOKING, 80, SKILL_TRAINED)))
+			var/obj/item/new_snack = new snack_path (get_turf(src))
 			qdel(src)
+			user.put_in_hands(new_snack)
 			return TRUE
 		if(ishuman(user))
 			to_chat(user, SPAN_WARNING("You fail to open \the [src]."))
 			return TRUE
+		return TRUE
+	return ..()
 
 /obj/item/shellfish/clam
 	name = "clam"
