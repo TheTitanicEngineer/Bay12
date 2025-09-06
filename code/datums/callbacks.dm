@@ -64,44 +64,40 @@ var/global/const/datum/callback/Callback = /datum/callback
 			identity = "([target.type] \ref[target]) [callable]"
 
 
+#define INVOKE_BEHAVIOR \
+	if (target == GLOBAL_PROC) { \
+		var/list/params; \
+		if (length(args) > 2) { \
+			params = args.Copy(3); \
+		} \
+		return call(callable)(arglist(params)); \
+	} else if (QDELETED(target)) { \
+		return; \
+	} else if (istype(target)) { \
+		var/list/params = list(target.target, target.callable); \
+		if (length(target.params)) { \
+			params += target.params; \
+		} \
+		if (length(args) > 1) { \
+			params += args.Copy(2); \
+		} \
+		return invoke(arglist(params)); \
+	} else { \
+		var/list/params; \
+		if (length(args) > 2) { \
+			params = args.Copy(3); \
+		} \
+		return call(target, callable)(arglist(params)); \
+	} \
+
+
 /proc/invoke(datum/callback/target, callable, ...)
-	if (target == GLOBAL_PROC)
-		var/list/params
-		if (length(args) > 2)
-			params = args.Copy(3)
-		return call(callable)(arglist(params))
-	else if (QDELETED(target))
-		return
-	else if (istype(target))
-		var/list/params = list(target.target, target.callable)
-		if (LAZYLEN(target.params))
-			params += target.params
-		if (length(args) > 1)
-			params += args.Copy(2)
-		return invoke(arglist(params))
-	else
-		var/list/params
-		if (length(args) > 2)
-			params = args.Copy(3)
-		return call(target, callable)(arglist(params))
+	INVOKE_BEHAVIOR
 
 
 /proc/invoke_async(datum/callback/target, callable, ...)
 	set waitfor = FALSE
-	if (target == GLOBAL_PROC)
-		var/list/params
-		if (length(args) > 2)
-			params = args.Copy(3)
-		return call(callable)(arglist(params))
-	else if (QDELETED(target))
-		return
-	else if (istype(target))
-		var/list/params = list(target.target, target.callable) + target.params
-		if (length(args) > 1)
-			params += args.Copy(2)
-		return invoke(arglist(params))
-	else
-		var/list/params
-		if (length(args) > 2)
-			params = args.Copy(3)
-		return call(target, callable)(arglist(params))
+	INVOKE_BEHAVIOR
+
+
+#undef INVOKE_BEHAVIOR
