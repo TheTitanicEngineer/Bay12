@@ -14,21 +14,13 @@ and return the result of calling those. invoke_async does not wait for an outcom
 on the first sleep, and so should be used only where results are not required.
 
 ** Callables
-Callables are proc names or proc references, with references preferred for safety (in most cases).
-These vary between 515 and older major versions:
-Before 515:
-- PROC_REF(name) refers to the last override of name on target, OR the global proc name.
-After 515:
-- src::name() must be used for the last override, or ::name() for the global.
-- nameof() is available at compile time to resolve safe proc names like nameof(/datum::fooBehavior()).
-  This can be preferable to direct refs in complex cases.
-A specific version of a proc may be called by fully specifying its type depth, like
-invoke(myLivingMob, /mob/living/proc/handle_vision)
+Callables are proc names or proc references, with references preferred for safety at compile time.
+Generally these should always be wrapped by PROC_REF and friends.
 
 ** Timers
 Timers accept callbacks as their first argument. For full timer documentation, see the timedevent
 datum. For example:
-addTimer(new Callback(myMob, myMob::drop_l_hand()), 10 SECONDS)
+addTimer(new Callback(myMob, TYPE_PROC_REF(/mob/living/drop_l_hand)), 10 SECONDS)
 */
 
 var/global/const/GLOBAL_PROC = FALSE
