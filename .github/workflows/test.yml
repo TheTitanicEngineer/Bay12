@@ -1,10 +1,11 @@
 name: Run Tests
 
 env:
+  CACHE_PREFIX: "test-1.1.0" # Update when this file is changed
+  BYOND_SOURCE: "https://indm.dev/byond" # Canonical: "https://www.byond.com/download/build"
   BYOND_MAJOR: "516"
   BYOND_MINOR: "1667"
-  BYOND_SOURCE: "https://indm.dev/byond" # Canonical: https://www.byond.com/download/build
-  SPACEMAN_DMM_VERSION: suite-1.10
+  SDMM_TARGET: "suite-1.10"
 
 permissions:
   contents: read
@@ -32,63 +33,70 @@ jobs:
         with:
           filters: .github/workflow-config/preflight-filters.yml
     outputs:
-      dm: ${{ steps.filter.outputs.dm }}
+      byond: ${{ steps.filter.outputs.byond }}
 
   dreamchecker:
     name: Dreamchecker
     runs-on: ubuntu-22.04
     needs:
     - preflight
-    if: needs.preflight.outputs.dm == 'true'
+    if: needs.preflight.outputs.byond == 'true'
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
-      - uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809
+      - name: Check dreamchecker cache
+        uses: actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809
+        id: check-cache
         with:
-          path: ~/spaceman_dmm/${{ env.SPACEMAN_DMM_VERSION }}
-          key: ${{ runner.os }}-spacemandmm-${{ env.SPACEMAN_DMM_VERSION }}
-      - name: Install Dreamchecker
-        run:  scripts/install-spaceman-dmm.sh dreamchecker
+          path: ~/spaceman_dmm/${{ env.SDMM_TARGET }}
+          key: ${{ env.CACHE_PREFIX }}-${{ runner.os }}-spacemandmm-${{ env.SDMM_TARGET }}
+      - name: Apply dreamchecker cache
+        if: ${{ steps.check-cache.outputs.cache-hit }}
+        run: |
+          cp ~/spaceman_dmm/${{ env.SDMM_TARGET }}/dreamchecker ~
+          chmod +x ~/dreamchecker
+      - name: Fetch dreamchecker
+        if: ${{ !steps.check-cache.outputs.cache-hit }}
+        run: |
+          wget -O ~/dreamchecker "https://github.com/SpaceManiac/SpacemanDMM/releases/download/${{ env.SDMM_TARGET }}/dreamchecker"
+          mkdir -p ~/spaceman_dmm/${{ env.SDMM_TARGET }}/
+          cp ~/dreamchecker ~/spaceman_dmm/${{ env.SDMM_TARGET }}/
+          chmod +x ~/dreamchecker
+      - name: Cache dreamchecker
+        if: ${{ !steps.check-cache.outputs.cache-hit && success() }}
+        uses: actions/cache/save@0400d5f644dc74513175e3cd8d07132dd4860809
+        with:
+          path: ~/spaceman_dmm/${{ env.SDMM_TARGET }}
+          key: ${{ env.CACHE_PREFIX }}-${{ runner.os }}-spacemandmm-${{ env.SDMM_TARGET }}
       - name: Run Dreamchecker
         run: ~/dreamchecker
-      - name: Report Failure
-        if: ${{ failure() }}
-        env:
-          JOB_STATUS: ${{ job.status }}
-          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-          HOOK_OS_NAME: ${{ runner.os }}
-          WORKFLOW_NAME: ${{ github.workflow }}
-        run: |
-          wget https://raw.githubusercontent.com/DiscordHooks/github-actions-discord-webhook/master/send.sh
-          chmod +x send.sh
-          ./send.sh failure $WEBHOOK_URL
 
   install_byond:
     name: Install BYOND
     runs-on: ubuntu-22.04
     needs:
     - preflight
-    if: needs.preflight.outputs.dm == 'true'
+    if: needs.preflight.outputs.byond == 'true'
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
-      - name: Check Cache
+      - name: Check Cached BYOND
         uses: actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809
-        id: check
+        id: check-cache
         with:
           path: ~/BYOND-${{ env.BYOND_MAJOR }}.${{ env.BYOND_MINOR }}
-          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+          key: ${{ env.CACHE_PREFIX }}-${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
       - name: Install Byond
-        if: ${{ !steps.check.outputs.cache-hit }}
+        if: ${{ !steps.check-cache.outputs.cache-hit }}
         run: |
           sudo apt-get update
           sudo apt-get -y install file unzip
           chmod +x test/install-byond.sh
           test/install-byond.sh
-      - name: Save Cache
-        if: ${{ !steps.check.outputs.cache-hit && success() }}
+      - name: Save BYOND Cache
+        if: ${{ !steps.check-cache.outputs.cache-hit && success() }}
         uses: actions/cache/save@0400d5f644dc74513175e3cd8d07132dd4860809
         with:
           path: ~/BYOND-${{ env.BYOND_MAJOR }}.${{ env.BYOND_MINOR }}
-          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+          key: ${{ env.CACHE_PREFIX }}-${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
 
   code_health:
     name: Code Health & Style
@@ -97,7 +105,7 @@ jobs:
     - preflight
     - dreamchecker
     - install_byond
-    if: needs.preflight.outputs.dm == 'true'
+    if: needs.preflight.outputs.byond == 'true'
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
       - name: Install Dependencies
@@ -108,17 +116,6 @@ jobs:
         env:
           TEST: CODE
         run: test/run-test.sh
-      - name: Report Failure
-        if: ${{ failure() }}
-        env:
-          JOB_STATUS: ${{ job.status }}
-          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-          HOOK_OS_NAME: ${{ runner.os }}
-          WORKFLOW_NAME: ${{ github.workflow }}
-        run: |
-          wget https://raw.githubusercontent.com/DiscordHooks/github-actions-discord-webhook/master/send.sh
-          chmod +x send.sh
-          ./send.sh failure $WEBHOOK_URL
 
   map_example:
     name: Unit Tests - Example Map
@@ -127,13 +124,13 @@ jobs:
     - preflight
     - dreamchecker
     - install_byond
-    if: needs.preflight.outputs.dm == 'true'
+    if: needs.preflight.outputs.byond == 'true'
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
       - uses: actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809
         with:
           path: ~/BYOND-${{ env.BYOND_MAJOR }}.${{ env.BYOND_MINOR }}
-          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+          key: ${{ env.CACHE_PREFIX }}-${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
       - name: Install Dependencies
         run: |
           sudo dpkg --add-architecture i386
@@ -144,17 +141,6 @@ jobs:
           TEST: MAP
           MAP_PATH: example
         run: test/run-test.sh
-      - name: Report Failure
-        if: ${{ failure() }}
-        env:
-          JOB_STATUS: ${{ job.status }}
-          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-          HOOK_OS_NAME: ${{ runner.os }}
-          WORKFLOW_NAME: ${{ github.workflow }}
-        run: |
-          wget https://raw.githubusercontent.com/DiscordHooks/github-actions-discord-webhook/master/send.sh
-          chmod +x send.sh
-          ./send.sh failure $WEBHOOK_URL
 
   map_torch:
     name: Unit Tests - Torch Map
@@ -163,13 +149,13 @@ jobs:
     - preflight
     - dreamchecker
     - install_byond
-    if: needs.preflight.outputs.dm == 'true'
+    if: needs.preflight.outputs.byond == 'true'
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
       - uses: actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809
         with:
           path: ~/BYOND-${{ env.BYOND_MAJOR }}.${{ env.BYOND_MINOR }}
-          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+          key: ${{ env.CACHE_PREFIX }}-${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
       - name: Install Dependencies
         run: |
           sudo dpkg --add-architecture i386
@@ -180,17 +166,6 @@ jobs:
           TEST: MAP
           MAP_PATH: torch
         run: test/run-test.sh
-      - name: Report Failure
-        if: ${{ failure() }}
-        env:
-          JOB_STATUS: ${{ job.status }}
-          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-          HOOK_OS_NAME: ${{ runner.os }}
-          WORKFLOW_NAME: ${{ github.workflow }}
-        run: |
-          wget https://raw.githubusercontent.com/DiscordHooks/github-actions-discord-webhook/master/send.sh
-          chmod +x send.sh
-          ./send.sh failure $WEBHOOK_URL
 
   map_dynamic:
     name: Unit Tests - Sites & Ruins
@@ -199,13 +174,13 @@ jobs:
     - preflight
     - dreamchecker
     - install_byond
-    if: needs.preflight.outputs.dm == 'true'
+    if: needs.preflight.outputs.byond == 'true'
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
       - uses: actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809
         with:
           path: ~/BYOND-${{ env.BYOND_MAJOR }}.${{ env.BYOND_MINOR }}
-          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+          key: ${{ env.CACHE_PREFIX }}-${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
       - name: Install Dependencies
         run: |
           sudo dpkg --add-architecture i386
@@ -216,14 +191,3 @@ jobs:
           TEST: MAP
           MAP_PATH: away_sites_testing
         run: test/run-test.sh
-      - name: Report Failure
-        if: ${{ failure() }}
-        env:
-          JOB_STATUS: ${{ job.status }}
-          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-          HOOK_OS_NAME: ${{ runner.os }}
-          WORKFLOW_NAME: ${{ github.workflow }}
-        run: |
-          wget https://raw.githubusercontent.com/DiscordHooks/github-actions-discord-webhook/master/send.sh
-          chmod +x send.sh
-          ./send.sh failure $WEBHOOK_URL
