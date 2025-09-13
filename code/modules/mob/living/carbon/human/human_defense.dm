@@ -392,6 +392,9 @@ meteor_act
 					affecting.embed(I, supplied_wound = created_wound)
 					I.has_embedded()
 
+		if (AM.IsFlameSource())
+			IgniteMob()
+
 		process_momentum(AM, TT)
 
 	else
