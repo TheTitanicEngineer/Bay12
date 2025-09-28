@@ -8,6 +8,7 @@
 [![CI Status](https://github.com/baystation12/baystation12/workflows/Run%20Tests/badge.svg)](https://github.com/Baystation12/Baystation12/actions/workflows/test.yml)
 [![CodeQL](https://github.com/baystation12/baystation12/workflows/CodeQL/badge.svg)](https://github.com/Baystation12/Baystation12/actions/workflows/codeql-analysis.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/baystation12/baystation12/badge)](https://www.codefactor.io/repository/github/baystation12/baystation12)
+
 ---
 
 ### LICENSE
@@ -18,7 +19,7 @@ Source code authored *before* the above is available under **GPL 3** terms as st
 
 For our purposes, the difference between these two licenses is that the AGPL requires you to make your source code available if you are hosting a game that uses Baystation source code in **any** way. The GPL instead allows you to (usually) remain closed source.
 
-Unless otherwise indicated, non-code sources (images, sound, etc) are available under **CC-3-BY-SA** terms as stated in [/docs/cc3-by-sa.txt](/docs/cc3-by-sa.txt).
+Unless otherwise indicated, non-code sources (images, sound, etc.) are available under **CC-3-BY-SA** terms as stated in [/docs/cc3-by-sa.txt](/docs/cc3-by-sa.txt).
 
 ---
 
@@ -31,6 +32,10 @@ If your comment does not relate to reproducing an issue, code quality, or archit
 See the **Code of Conduct** ([/docs/CODE_OF_CONDUCT.md](/docs/CODE_OF_CONDUCT.md)) for our expectations on interacting with or providing feedback to other contributors and users.
 
 See the **Security Policy** ([/docs/SECURITY.md](/docs/SECURITY.md)) for how to tell us about vulnerabilities and other security problems.
+
+**Generative AI is not welcome here.**
+\
+[![https://www.aihonestybadge.com](https://www.aihonestybadge.com/badges/no-ai.svg)](https://www.aihonestybadge.com)
 
 ---
 

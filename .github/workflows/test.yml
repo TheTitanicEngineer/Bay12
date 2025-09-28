@@ -4,8 +4,8 @@ env:
   CACHE_PREFIX: "test-1.1.0" # Update when this file is changed
   BYOND_SOURCE: "https://indm.dev/byond" # Canonical: "https://www.byond.com/download/build"
   BYOND_MAJOR: "516"
-  BYOND_MINOR: "1667"
-  SDMM_TARGET: "suite-1.10"
+  BYOND_MINOR: "1669"
+  SDMM_TARGET: "suite-1.11"
 
 permissions:
   contents: read
