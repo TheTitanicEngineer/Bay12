@@ -3,12 +3,12 @@ GLOBAL_TYPED_AS(is_http_protocol, /regex, regex("^https?://"))
 
 /// Convert icon to base64-encoded png data. Consider caching heavy use
 /proc/icon2base64(icon/icon)
-	var/static/savefile/temp = new
+	var/static/savefile/converter = new ("data/icon_base64.sav")
 	var/static/regex/newlines = regex(@"\n", "g")
 	if (!isicon(icon))
 		return
-	temp["_"] = icon
-	return replacetext(copytext(splittext(temp.ExportText("_"), "{")[2], 3, -5), newlines, "")
+	converter["_"] = icon
+	return replacetext(copytext(splittext(converter.ExportText("_"), "{")[2], 3, -5), newlines, "")
 
 
 /proc/icon2html(thing, target, icon_state, dir, frame = 1, moving = FALSE, realsize = FALSE, class = null)
