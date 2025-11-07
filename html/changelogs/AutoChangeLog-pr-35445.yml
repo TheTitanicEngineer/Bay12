@@ -1,0 +1,5 @@
+author: limelier
+changes:
+  - {rscadd: Musical instruments are now available in the loadout under the 
+      "utility" tab}
+delete-after: true
