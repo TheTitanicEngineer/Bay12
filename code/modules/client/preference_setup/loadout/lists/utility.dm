@@ -121,3 +121,26 @@ Pouches and kits
 	display_name = "pencil case"
 	path = /obj/item/storage/fancy/pencilcase
 	cost = 2
+
+/****************
+Instruments
+****************/
+
+/datum/gear/utility/musical_instruments
+	display_name = "musical instruments"
+	path = /obj/item/device/synthesized_instrument
+	cost = 6
+
+/datum/gear/utility/musical_instruments/New()
+	..()
+	var/musical_instruments = list()
+	musical_instruments["acoustic guitar"] = /obj/item/device/synthesized_instrument/guitar
+	musical_instruments["polyguitar flying V"] = /obj/item/device/synthesized_instrument/guitar/multi_v
+	musical_instruments["polyguitar strato black"] = /obj/item/device/synthesized_instrument/guitar/multi_strato_black
+	musical_instruments["polyguitar strato gradient"] = /obj/item/device/synthesized_instrument/guitar/multi_strato_gradient
+	musical_instruments["polyguitar strato red"] = /obj/item/device/synthesized_instrument/guitar/multi_strato_red
+	musical_instruments["polyguitar strato purple"] = /obj/item/device/synthesized_instrument/guitar/multi_strato_purple
+	musical_instruments["synthesizer"] = /obj/item/device/synthesized_instrument/synthesizer
+	musical_instruments["trumpet"] = /obj/item/device/synthesized_instrument/trumpet
+	musical_instruments["violin"] = /obj/item/device/synthesized_instrument/violin
+	gear_tweaks += new/datum/gear_tweak/path(musical_instruments)
