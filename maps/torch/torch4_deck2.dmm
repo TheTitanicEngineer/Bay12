@@ -8059,7 +8059,8 @@
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/binary/passive_gate{
-	dir = 4
+	dir = 4;
+	name = "Hydrogen to Secondary"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
@@ -8170,7 +8171,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/engineering/bluespace)
 "tn" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/yellow{
+/obj/machinery/atmospherics/pipe/manifold/hidden/yellow{
 	dir = 8
 	},
 /turf/simulated/wall/r_wall/prepainted,
@@ -9158,9 +9159,9 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
 "wf" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/high_power{
 	dir = 8;
-	name = "HX to Primary"
+	name = "Emergency Cooling to Primary"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
@@ -14222,7 +14223,8 @@
 	},
 /obj/machinery/light,
 /obj/machinery/atmospherics/binary/passive_gate{
-	dir = 1
+	dir = 1;
+	name = "Hydrogen to Primary"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/engineering/engine_room)
@@ -16081,7 +16083,6 @@
 	id = "cooling_in";
 	name = "Coolant Injector";
 	power_rating = 30000;
-	use_power = 1;
 	volume_rate = 700
 	},
 /obj/floor_decal/industrial/warning/corner{
